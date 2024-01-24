@@ -18,6 +18,7 @@ import { useState } from 'react';
     }
 
     function handleNewCommentChange(){
+        event.target.setCustomValidity('')
         setNewCommentText(event.target.value)
         
     }
@@ -27,6 +28,10 @@ import { useState } from 'react';
             return comment !== commentDelete
         })
         setComments(commentsWithoutDeleteOne);
+    }
+
+    function handleNewCommentInvalid(){
+        event.target.setCustomValidity('Esse campo é obrigatório!')
     }
 
     return (
@@ -63,10 +68,12 @@ import { useState } from 'react';
                 placeholder='Deixe seu comentário..'
                 value={newCommentText}
                 onChange={handleNewCommentChange}
+                onInvalid={handleNewCommentInvalid}
+                required
                 />
 
                 <footer>
-                    <button type='submit'>Publicar</button>
+                    <button type='submit' disabled={newCommentText.length === 0}>Publicar</button>
                 </footer>
             </form>
 
